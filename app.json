@@ -1,0 +1,16 @@
+{
+  "name": "js-arena",
+  "description": "JS Arena",
+  "scripts": {
+  },
+  "env": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-nodejs"
+    }
+  ]
+}
