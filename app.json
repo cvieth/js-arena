@@ -1,12 +1,13 @@
 {
   "name": "js-arena",
   "description": "JS Arena",
+  "repository": "https://github.com/cvieth/js-arena",
+  "image": "heroku/nodejs",
   "scripts": {
   },
   "env": {
   },
   "addons": [
-
   ],
   "buildpacks": [
     {
