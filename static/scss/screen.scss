@@ -1,0 +1,35 @@
+@import 'colors';
+@import url(https://fonts.googleapis.com/css?family=VT323);
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+
+  position: relative;
+
+  background: #333333;
+  text-align: center;
+  font-family: 'VT323';
+
+
+  .content {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    h1 {
+      font-size: 80px;
+      color: mediumpurple;
+    }
+
+    p {
+      font-size: 20px;
+      color: lightgray;
+    }
+  }
+}
