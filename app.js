@@ -28,7 +28,7 @@ app.use(sass({
     dest: path.join(__dirname, 'public/css'),
     debug: true,
     outputStyle: 'compressed',
-    prefix:  '/css'  // Where prefix is at <link rel="stylesheets" href="prefix/style.css"/>
+    prefix: '/css'  // Where prefix is at <link rel="stylesheets" href="prefix/style.css"/>
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
