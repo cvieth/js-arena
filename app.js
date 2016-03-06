@@ -47,9 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')));
  */
 
 var routes = require('./routes/index');
-var arena = require('./routes/arena');
 app.use('/', routes);
-app.use('/arena', arena);
 
 
 /**

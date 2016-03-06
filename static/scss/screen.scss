@@ -1,6 +1,23 @@
 @import 'colors';
 @import url(https://fonts.googleapis.com/css?family=VT323);
 
+body {
+  #edit {
+    position: relative;
+    height: 300px;
+    width: 600px;
+
+    #ace {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+  }
+}
+
+/*
 html {
   height: 100%;
 }
@@ -33,3 +50,4 @@ body {
     }
   }
 }
+*/
