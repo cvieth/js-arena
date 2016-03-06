@@ -21,6 +21,31 @@ html {
       color: $colorAction;
     }
   }
+
+  body.arena {
+    .header {
+      h1 {
+        font-size: 5vw;
+        color: $colorAction;
+        margin: 0;
+      }
+    }
+    .content {
+      #edit {
+        position: relative;
+        width: 75%;
+        height: 400px;
+        #ace {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+        }
+      }
+    }
+  }
+
   /**
    * Start Page
    **/
