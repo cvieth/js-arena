@@ -1,0 +1,138 @@
+@import url(https://fonts.googleapis.com/css?family=VT323);
+
+$colorAction: #9933CC;
+$colorBackground: #383838;
+$colorText: #cccccc;
+
+html {
+  height: 100%;
+  width: 100%;
+  body {
+    height: 100%;
+    width: 100%;
+
+    font-family: "VT323";
+    background: $colorBackground;
+    color: $colorText;
+
+    h1 {
+      font-size: 23vw;
+      color: $colorAction;
+      margin: 0;
+    }
+  }
+
+  body.error {
+    h1 {
+      font-size: 5vw;
+    }
+  }
+
+  body.arena {
+    .header {
+
+    }
+    .content {
+      .log {
+        width: 75%;
+        height: 100px;
+        margin-left: auto;
+        margin-right: auto;
+        overflow: scroll;
+        font-family: "VT323";
+      }
+      .edit {
+        position: relative;
+        width: 75%;
+        height: 400px;
+        margin-left: auto;
+        margin-right: auto;
+        #ace {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+        }
+      }
+      .actions {
+        text-align: center;
+        a {
+          display: inline-block;
+          width: 25%;
+          border: solid 1px;
+          padding: 15px;
+          margin: 10px;
+          font-size: 2em;
+
+          background: $colorAction;
+          color: $colorBackground;
+          border: solid 1px $colorAction;
+        }
+      }
+    }
+  }
+
+  /**
+   * Start Page
+   **/
+  body.start {
+
+    .header {
+      h1 {
+        font-size: 23vw;
+      }
+
+    }
+
+    .content {
+      .intro {
+        width: 75%;
+        margin-left: auto;
+        margin-right: auto;
+        color: $colorText;
+        margin-bottom: 30px;
+
+        h2 {
+          text-align: center;
+          font-size: 4em;
+          margin-bottom: 15px;
+        }
+
+        p {
+          margin-bottom: 10px;
+          text-align: justify;
+          font-size: 2em;
+          text-transform: uppercase;
+        }
+
+        strong {
+          font-weight: bolder;
+          text-decoration: underline;
+          margin-top: 10px;
+          margin-bottom: 20px;
+        }
+      }
+      .actions {
+        text-align: center;
+        a {
+          display: inline-block;
+          width: 25%;
+          border: solid 1px;
+          padding: 15px;
+          font-size: 3em;
+        }
+
+        a#leave {
+          background: $colorAction;
+          color: $colorBackground;
+          border: solid 1px $colorAction;
+        }
+        a#proceed {
+          background: $colorBackground;
+          color: $colorAction;
+        }
+      }
+    }
+  }
+}
