@@ -1,5 +1,5 @@
 var express = require('express');
-var socket_io    = require( "socket.io" );
+var socket_io = require("socket.io");
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -10,15 +10,17 @@ var sass = require('node-sass-middleware');
 var app = express();
 
 // Socket.io
-var io           = socket_io();
-app.io           = io;
+var io = socket_io();
+app.io = io;
 
 // socket.io events
-io.on( "connection", function( socket )
-{
-    console.log( "A user connected" );
+io.on("connection", function (socket) {
+    console.log("A user connected");
+    socket.on('send', function (data) {
+        console.log(data);
+        io.sockets.emit('receive', data);
+    })
 });
-
 
 
 // view engine setup

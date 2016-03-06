@@ -5,13 +5,13 @@ html
         link(rel='stylesheet', href='/css/screen.css')
         script(src="/socket.io/socket.io.js")
         script(src="//cdn.jsdelivr.net/jquery/2.2.1/jquery.min.js")
-
+        script(src="//cdn.jsdelivr.net/ace/1.2.3/min/ace.js")
 
     body
         #edit
-            #ace test
-
+            #ace alert("Player connected!");
+        #control
+            button#send Fire Code
         // ACE Editor
-        script(src="https://cdn.jsdelivr.net/ace/1.2.3/min/ace.js")
-        script(src="/js/editor.js")
+        script(src="/js/arena.js")
 
