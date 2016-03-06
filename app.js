@@ -1,4 +1,5 @@
 var express = require('express');
+var socket_io    = require( "socket.io" );
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -11,6 +12,18 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+// Socket.io
+var io           = socket_io();
+app.io           = io;
+
+// socket.io events
+io.on( "connection", function( socket )
+{
+    console.log( "A user connected" );
+});
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,7 +41,7 @@ app.use(sass({
     dest: path.join(__dirname, 'public/css'),
     debug: true,
     outputStyle: 'compressed',
-    prefix:  '/css'  // Where prefix is at <link rel="stylesheets" href="prefix/style.css"/>
+    prefix: '/css'  // Where prefix is at <link rel="stylesheets" href="prefix/style.css"/>
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
