@@ -1,53 +1,88 @@
-@import 'colors';
 @import url(https://fonts.googleapis.com/css?family=VT323);
 
-body {
-  #edit {
-    position: relative;
-    height: 300px;
-    width: 600px;
+$colorAction: #9933CC;
+$colorBackground: #383838;
+$colorText: #cccccc;
 
-    #ace {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-    }
-  }
-}
-
-/*
 html {
   height: 100%;
-}
+  width: 100%;
+  body {
+    height: 100%;
+    width: 100%;
 
-body {
-  min-height: 100%;
+    font-family: "VT323";
+    background: $colorBackground;
+    color: $colorText;
+  }
 
-  position: relative;
-
-  background: #333333;
-  text-align: center;
-  font-family: 'VT323';
-
-
-  .content {
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
+  body.error {
     h1 {
-      font-size: 80px;
-      color: mediumpurple;
+      color: $colorAction;
+    }
+  }
+  /**
+   * Start Page
+   **/
+  body.start {
+
+    .header {
+      h1 {
+        font-size: 23vw;
+        color: $colorAction;
+        margin: 0;
+      }
+
     }
 
-    p {
-      font-size: 20px;
-      color: lightgray;
+    .content {
+      .intro {
+        width: 75%;
+        margin-left: auto;
+        margin-right: auto;
+        color: $colorText;
+        margin-bottom: 30px;
+
+        h2 {
+          text-align: center;
+          font-size: 4em;
+          margin-bottom: 15px;
+        }
+
+        p {
+          margin-bottom: 10px;
+          text-align: justify;
+          font-size: 2em;
+          text-transform: uppercase;
+        }
+
+        strong {
+          font-weight: bolder;
+          text-decoration: underline;
+          margin-top: 10px;
+          margin-bottom: 20px;
+        }
+      }
+      .actions {
+        text-align: center;
+        a {
+          display: inline-block;
+          width: 25%;
+          border: solid 1px;
+          padding: 15px;
+          font-size: 3em;
+        }
+
+        a#leave {
+          background: $colorAction;
+          color: $colorBackground;
+          border: solid 1px $colorAction;
+        }
+        a#proceed {
+          background: $colorBackground;
+          color: $colorAction;
+        }
+      }
     }
   }
 }
-*/
