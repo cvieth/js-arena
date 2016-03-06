@@ -14,33 +14,60 @@ html {
     font-family: "VT323";
     background: $colorBackground;
     color: $colorText;
+
+    h1 {
+      font-size: 23vw;
+      color: $colorAction;
+      margin: 0;
+    }
   }
 
   body.error {
     h1 {
-      color: $colorAction;
+      font-size: 5vw;
     }
   }
 
   body.arena {
     .header {
-      h1 {
-        font-size: 5vw;
-        color: $colorAction;
-        margin: 0;
-      }
+
     }
     .content {
-      #edit {
+      .log {
+        width: 75%;
+        height: 100px;
+        margin-left: auto;
+        margin-right: auto;
+        overflow: scroll;
+        font-family: "VT323";
+      }
+      .edit {
         position: relative;
         width: 75%;
         height: 400px;
+        margin-left: auto;
+        margin-right: auto;
         #ace {
           position: absolute;
           top: 0;
           bottom: 0;
           left: 0;
           right: 0;
+        }
+      }
+      .actions {
+        text-align: center;
+        a {
+          display: inline-block;
+          width: 25%;
+          border: solid 1px;
+          padding: 15px;
+          margin: 10px;
+          font-size: 2em;
+
+          background: $colorAction;
+          color: $colorBackground;
+          border: solid 1px $colorAction;
         }
       }
     }
@@ -54,8 +81,6 @@ html {
     .header {
       h1 {
         font-size: 23vw;
-        color: $colorAction;
-        margin: 0;
       }
 
     }

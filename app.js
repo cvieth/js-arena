@@ -16,9 +16,13 @@ app.io = io;
 // socket.io events
 io.on("connection", function (socket) {
     console.log("A user connected");
-    socket.on('send', function (data) {
-        console.log(data);
-        io.sockets.emit('receive', data);
+    console.log(socket);
+
+    io.sockets.emit('player-joined');
+
+
+    socket.on('exec-remote', function (data) {
+        io.sockets.emit('exec-remote', data);
     })
 });
 
