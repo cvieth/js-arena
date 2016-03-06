@@ -16,16 +16,13 @@ app.io = io;
 // socket.io events
 io.on("connection", function (socket) {
     console.log("A user connected");
-    console.log(socket);
 
     io.sockets.emit('player-joined');
-
 
     socket.on('exec-remote', function (data) {
         io.sockets.emit('exec-remote', data);
     })
 });
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
