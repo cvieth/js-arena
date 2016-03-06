@@ -1,5 +1,5 @@
 var express = require('express');
-var socket_io    = require( "socket.io" );
+var socket_io = require("socket.io");
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -7,22 +7,24 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var sass = require('node-sass-middleware');
 
-
-var routes = require('./routes/index');
-var users = require('./routes/users');
-
 var app = express();
 
 // Socket.io
-var io           = socket_io();
-app.io           = io;
+var io = socket_io();
+app.io = io;
 
 // socket.io events
-io.on( "connection", function( socket )
-{
-    console.log( "A user connected" );
-});
+io.on("connection", function (socket) {
+    console.log("A user connected");
+    console.log(socket);
 
+    io.sockets.emit('player-joined');
+
+
+    socket.on('exec-remote', function (data) {
+        io.sockets.emit('exec-remote', data);
+    })
+});
 
 
 // view engine setup
@@ -45,8 +47,19 @@ app.use(sass({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+/**
+ * Routes
+ */
+
+var routes = require('./routes/index');
 app.use('/', routes);
-app.use('/users', users);
+var arena = require('./routes/arena');
+app.use('/arena', arena);
+
+/**
+ * Error Stuff
+ */
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
