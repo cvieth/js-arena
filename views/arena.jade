@@ -1,18 +1,7 @@
-doctype html
-html
-    head
-        title= title
-        link(rel='stylesheet', href='/css/reset.css')
-        link(rel='stylesheet', href='/css/normalize.css')
-        link(rel='stylesheet', href='/css/screen.css')
-        script(src="/socket.io/socket.io.js")
-        script(src="//cdn.jsdelivr.net/jquery/2.2.1/jquery.min.js")
-        script(src="//cdn.jsdelivr.net/ace/1.2.3/min/ace.js")
+extends layout
 
-    body
-
-
-
+block content
+    body.arena
         .header
             h1 > JS Arena
         #edit
@@ -20,5 +9,8 @@ html
         #control
             button#send Fire Code
         // ACE Editor
+        script(src="/socket.io/socket.io.js")
+        script(src="//cdn.jsdelivr.net/jquery/2.2.1/jquery.min.js")
+        script(src="//cdn.jsdelivr.net/ace/1.2.3/min/ace.js")
         script(src="/js/arena.js")
 

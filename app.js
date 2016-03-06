@@ -50,7 +50,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 var routes = require('./routes/index');
 app.use('/', routes);
-
+var arena = require('./routes/arena');
+app.use('/arena', arena);
 
 /**
  * Error Stuff
