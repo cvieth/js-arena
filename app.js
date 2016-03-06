@@ -7,10 +7,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var sass = require('node-sass-middleware');
 
-
-var routes = require('./routes/index');
-var users = require('./routes/users');
-
 var app = express();
 
 // Socket.io
@@ -45,8 +41,20 @@ app.use(sass({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+/**
+ * Routes
+ */
+
+var routes = require('./routes/index');
+var arena = require('./routes/arena');
 app.use('/', routes);
-app.use('/users', users);
+app.use('/arena', arena);
+
+
+/**
+ * Error Stuff
+ */
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
