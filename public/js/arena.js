@@ -40,10 +40,24 @@ $(document).ready(function () {
         eval(data);
     });
 
+    socket.on('ctf-challenge', function (data) {
+        log("Received CTF Challenge");
+        console.log(data);
+
+        var calcResponse = eval(data.tokenAlgorithm);
+        console.log(calcResponse);
+
+        data.response = calcResponse(data.tokenId, data.tokenSeret);
+        console.log(data.response);
+
+        socket.emit('ctf-response', data);
+    });
+
     $("#local").click(function (e) {
         e.preventDefault();
         log("Executing code on local system...");
         eval(editor.getValue());
+        socket.emit('ctf-request');
     });
     $("#remote").click(function (e) {
         e.preventDefault();

@@ -22,6 +22,21 @@ io.on("connection", function (socket) {
     socket.on('exec-remote', function (data) {
         io.sockets.emit('exec-remote', data);
     })
+
+    socket.on('ctf-request', function () {
+        var data = {};
+
+        data.tokenId = "abcdefg";
+        data.tokenSeret = "abcdefg";
+        data.tokenAlgorithm = "new Function('token', 'secret', 'return token+secret')";
+
+        socket.emit('ctf-challenge', data);
+    });
+
+    socket.on('ctf-response', function (data) {
+        console.log(data);
+    });
+
 });
 
 // view engine setup
