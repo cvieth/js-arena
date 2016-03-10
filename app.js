@@ -7,6 +7,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var sass = require('node-sass-middleware');
 
+var client = require('redis').createClient(process.env.REDIS_URL);
+client.set('clients-connected', 0);
+
 var app = express();
 
 // Socket.io
@@ -16,12 +19,13 @@ app.io = io;
 // socket.io events
 io.on("connection", function (socket) {
     console.log("A user connected");
+    client.incr('clients-connected');
 
     io.sockets.emit('player-joined');
 
     socket.on('exec-remote', function (data) {
         io.sockets.emit('exec-remote', data);
-    })
+    });
 
     socket.on('ctf-request', function () {
         var data = {};
