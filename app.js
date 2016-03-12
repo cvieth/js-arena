@@ -6,6 +6,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var sass = require('node-sass-middleware');
+var uuid = require('node-uuid');
 
 var client = require('redis').createClient(process.env.REDIS_URL);
 
@@ -42,9 +43,15 @@ io.on("connection", function (socket) {
     socket.on('ctf-request', function () {
         var data = {};
 
-        data.tokenId = "abcdefg";
-        data.tokenSeret = "abcdefg";
-        data.tokenAlgorithm = "new Function('token', 'secret', 'return token+secret')";
+        // Generate
+        data.id = uuid.v1();
+        data.secret = uuid.v4();
+        data.algorithm = "new Function('token', 'secret', 'return token+secret')";
+
+        // Calculate expected Response
+        var algorithm = eval(data.algorithm);
+        var expectedResult = algorithm(data.id, data.secret);
+        console.log('Expected result:' + expectedResult);
 
         socket.emit('ctf-challenge', data);
     });
