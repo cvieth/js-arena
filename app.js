@@ -1,3 +1,6 @@
+// Initiate NewRelic
+require('newrelic');
+
 var express = require('express');
 var socket_io = require("socket.io");
 var path = require('path');
