@@ -8,7 +8,10 @@ var bodyParser = require('body-parser');
 var sass = require('node-sass-middleware');
 
 var client = require('redis').createClient(process.env.REDIS_URL);
-client.set('clients-connected', 0);
+
+// Setup Redis
+client.set('clients:connected', 0);
+client.setnx('clients:counted', 0);
 
 var app = express();
 
@@ -18,15 +21,23 @@ app.io = io;
 
 // socket.io events
 io.on("connection", function (socket) {
-    console.log("A user connected");
-    client.incr('clients-connected');
 
+    // Client connected
+    client.incr('clients:connected');
     io.sockets.emit('player-joined');
 
+    // Client disconnected
+    socket.on('disconnect', function () {
+        client.decr('clients:connected');
+        io.emit('player-left');
+    });
+
+    // Broadcast remote Code
     socket.on('exec-remote', function (data) {
         io.sockets.emit('exec-remote', data);
     });
 
+    // Request CTF Package by Client
     socket.on('ctf-request', function () {
         var data = {};
 
@@ -37,10 +48,10 @@ io.on("connection", function (socket) {
         socket.emit('ctf-challenge', data);
     });
 
+    // Received CTF Response by Client
     socket.on('ctf-response', function (data) {
         console.log(data);
     });
-
 });
 
 // view engine setup
