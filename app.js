@@ -8,11 +8,11 @@ var bodyParser = require('body-parser');
 var sass = require('node-sass-middleware');
 var uuid = require('node-uuid');
 
-var client = require('redis').createClient(process.env.REDIS_URL);
+var redis = require('redis').createClient(process.env.REDIS_URL);
 
 // Setup Redis
-client.set('clients:connected', 0);
-client.setnx('clients:counted', 0);
+redis.set('clients:connected', 0);
+redis.setnx('clients:counted', 0);
 
 var app = express();
 
@@ -24,13 +24,13 @@ app.io = io;
 io.on("connection", function (socket) {
 
     // Client connected
-    client.incr('clients:connected');
-    client.incr('clients:counted');
+    redis.incr('clients:connected');
+    redis.incr('clients:counted');
     io.sockets.emit('player-joined');
 
     // Client disconnected
     socket.on('disconnect', function () {
-        client.decr('clients:connected');
+        redis.decr('clients:connected');
         io.emit('player-left');
     });
 
