@@ -40,17 +40,18 @@ $(document).ready(function () {
         eval(data);
     });
 
-    socket.on('ctf-challenge', function (data) {
-        log("Received CTF Challenge");
-        console.log(data);
+    socket.on('ctf-challenge', function (challenge) {
+        // Create response object
+        var response = {};
+        response.id = challenge.id;
+        response.secret = challenge.secret;
 
-        var calcResponse = eval(data.tokenAlgorithm);
-        console.log(calcResponse);
+        // Calculate result
+        var algorithm = eval(challenge.algorithm);
+        response.result = algorithm(challenge.id, challenge.secret);
 
-        data.response = calcResponse(data.tokenId, data.tokenSeret);
-        console.log(data.response);
-
-        socket.emit('ctf-response', data);
+        // Send response
+        socket.emit('ctf-response', challenge);
     });
 
     $("#local").click(function (e) {
