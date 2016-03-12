@@ -24,6 +24,7 @@ io.on("connection", function (socket) {
 
     // Client connected
     client.incr('clients:connected');
+    client.incr('clients:counted');
     io.sockets.emit('player-joined');
 
     // Client disconnected
