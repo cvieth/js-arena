@@ -41,18 +41,23 @@ io.on("connection", function (socket) {
 
     // Request CTF Package by Client
     socket.on('ctf-request', function () {
+        // Generate Challenge Package
         var data = {};
-
-        // Generate
         data.id = uuid.v1();
+
+        // Generate Secret
         data.secret = uuid.v4();
+        redis.hset('challenges:'+data.id, 'secret', data.secret);
+
+        // Setting Algorithm
         data.algorithm = "new Function('token', 'secret', 'return token+secret')";
 
-        // Calculate expected Response
+        // Calculate and store expected Response
         var algorithm = eval(data.algorithm);
         var expectedResult = algorithm(data.id, data.secret);
-        console.log('Expected result:' + expectedResult);
+        redis.hset('challenges:'+data.id, 'expected-result', expectedResult);
 
+        // Send Event
         socket.emit('ctf-challenge', data);
     });
 
