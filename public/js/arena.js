@@ -80,15 +80,16 @@ $(document).ready(function () {
         socket.emit('ctf-request');
     }, 10000);
 
+    /*
+     socket.on('highscore-update', function (highscore) {
+     //log("Received highscore update");
+     console.log(highscore);
+     for (i = 0; i < highscore.length; i += 2) {
+     row = highscore.slice(i, i + 1);
+     console.log(row);
+     }
 
-    socket.on('highscore-update', function (highscore) {
-        //log("Received highscore update");
-        console.log(highscore);
-        for (i = 0; i <= highscore.length; i += 2) {
-            row = highscore.slice(i, i + 1);
-            console.log(row);
-        }
-
-    });
+     });
+     */
 });
 
