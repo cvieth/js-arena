@@ -13,6 +13,7 @@ var redis = require('redis').createClient(process.env.REDIS_URL);
 // Setup Redis
 redis.set('clients:connected', 0);
 redis.setnx('clients:counted', 0);
+redis.del('highscore');
 
 var app = express();
 
