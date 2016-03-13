@@ -67,12 +67,17 @@ $(document).ready(function () {
         e.preventDefault();
         log("Executing code on local system...");
         eval(editor.getValue());
-        socket.emit('ctf-request');
     });
     $("#remote").click(function (e) {
         e.preventDefault();
         log("Executing code on remote systems ...");
         socket.emit('exec-remote', editor.getValue());
     });
+
+    // Setup Interval
+    setInterval(function () {
+        // Request CTF Challenge
+        socket.emit('ctf-request');
+    }, 3000);
 });
 
