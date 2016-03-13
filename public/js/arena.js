@@ -83,7 +83,7 @@ $(document).ready(function () {
 
     socket.on('highscore-update', function (highscore) {
         for (var i=0; i<highscore.length; i=i+2) {
-            console.log(i);
+
             var user = highscore[i];
             var score = highscore[i+1];
 
