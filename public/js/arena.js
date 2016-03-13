@@ -79,5 +79,11 @@ $(document).ready(function () {
         // Request CTF Challenge
         socket.emit('ctf-request');
     }, 10000);
+
+
+    socket.on('highscore-update', function (data) {
+        log("Received highscore update");
+        console.log(data);
+    });
 });
 
