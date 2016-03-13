@@ -71,6 +71,8 @@ io.on("connection", function (socket) {
 
             // Check result
             var expectedResult = redis.hget('challenges:' + data.id, 'expected-result', expectedResult);
+            console.log('Expected Result: ' +expectedResult);
+            console.log('Received Result: ' +answer.result);
             if (expectedResult == answer.result) {
                 // Result is corrrect
                 answer.success = true;
