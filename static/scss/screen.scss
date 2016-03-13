@@ -20,6 +20,16 @@ html {
       color: $colorAction;
       margin: 0;
     }
+
+    .grid2 {
+      display: inline-block;
+      width: 50%;
+
+      .element1 {
+      }
+      .element2 {
+      }
+    }
   }
 
   body.error {
@@ -29,18 +39,22 @@ html {
   }
 
   body.arena {
-    .header {
-
-    }
     .content {
-      .log {
+      .notifications {
         width: 75%;
         height: 100px;
         margin-left: auto;
         margin-right: auto;
-        overflow: scroll;
-        font-family: "VT323";
+        .log {
+          overflow: scroll;
+          font-family: "VT323";
+        }
+        .highscore {
+          overflow: scroll;
+          font-family: "VT323";
+        }
       }
+
       .edit {
         position: relative;
         width: 75%;
