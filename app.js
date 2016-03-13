@@ -65,7 +65,7 @@ io.on("connection", function (socket) {
     socket.on('ctf-response', function (data) {
         console.log(data);
 
-        console.log(redis.hexists('challenges:' + data.id, 'secret', data.secret));
+        console.log(redis.hexists('challenges:' + data.id, 'secret'));
     });
 });
 
