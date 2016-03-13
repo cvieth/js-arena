@@ -85,6 +85,7 @@ $(document).ready(function () {
         // Clear Table
         var table = $('table.highscore');
         table.empty();
+        table.append('<tr><th>User</th><th>Score</th></tr>');
 
         for (var i = 0; i < highscore.length; i = i + 2) {
 
