@@ -78,6 +78,6 @@ $(document).ready(function () {
     setInterval(function () {
         // Request CTF Challenge
         socket.emit('ctf-request');
-    }, 3000);
+    }, 10000);
 });
 
