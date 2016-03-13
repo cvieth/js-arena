@@ -70,31 +70,27 @@ io.on("connection", function (socket) {
             // Challenge exists
 
             // Check result
-            var expectedResult = null;
-            redis.hget('challenges:' + data.id, 'expected-result', function (err, obj) {
-                console.dir(obj);
-                expectedResult = obj;
+            redis.hget('challenges:' + data.id, 'expected-result', function (err, expectedResult) {
+                console.log('Expected Result: ' + expectedResult);
+                console.log('Received Result: ' + data.result);
+                if (expectedResult == data.result) {
+                    // Result is corrrect
+                    answer.success = true;
+                    answer.message = "Answer is correct";
+                } else {
+                    // Result is incorrect
+                    answer.success = false;
+                    answer.message = "Answer is incorrect";
+                }
+                socket.emit('ctf-answer', answer);
             });
-            console.log('Expected Result: ' + expectedResult);
-            console.log('Received Result: ' + data.result);
-            if (expectedResult == data.result) {
-                // Result is corrrect
-                answer.success = true;
-                answer.message = "Answer is correct";
-            } else {
-                // Result is incorrect
-                answer.success = false;
-                answer.message = "Answer is incorrect";
-            }
         }
         else {
             // Challenge does not exist
             answer.success = false;
             answer.message = "Challenge does not exist";
+            socket.emit('ctf-answer', answer);
         }
-
-        // Send answer
-        socket.emit('ctf-answer', answer);
     });
 });
 
