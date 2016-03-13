@@ -77,6 +77,9 @@ io.on("connection", function (socket) {
                     // Result is corrrect
                     answer.success = true;
                     answer.message = "Answer is correct";
+
+                    // Delete entry from redis
+                    redis.del('challenges:' + data.id);
                 } else {
                     // Result is incorrect
                     answer.success = false;
