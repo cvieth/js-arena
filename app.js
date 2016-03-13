@@ -70,10 +70,14 @@ io.on("connection", function (socket) {
             // Challenge exists
 
             // Check result
-            var expectedResult = redis.hget('challenges:' + data.id, 'expected-result', expectedResult);
-            console.log('Expected Result: ' +expectedResult);
-            console.log('Received Result: ' +answer.result);
-            if (expectedResult == answer.result) {
+            var expectedResult = null;
+            redis.hget('challenges:' + data.id, 'expected-result', expectedResult, function (err, obj) {
+                console.dir(obj);
+                expectedResult = obj;
+            });
+            console.log('Expected Result: ' + expectedResult);
+            console.log('Received Result: ' + data.result);
+            if (expectedResult == data.result) {
                 // Result is corrrect
                 answer.success = true;
                 answer.message = "Answer is correct";
