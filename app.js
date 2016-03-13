@@ -106,7 +106,7 @@ io.on("connection", function (socket) {
 });
 
 setInterval(function () {
-    redis.zrange('highscore', '0', '-1', 'withscores', function (err, result) {
+    redis.zrevrange('highscore', '0', '-1', 'withscores', function (err, result) {
         io.sockets.emit('highscore-update', result);
     })
 }, 1000);
