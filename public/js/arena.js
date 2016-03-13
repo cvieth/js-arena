@@ -82,12 +82,19 @@ $(document).ready(function () {
 
 
     socket.on('highscore-update', function (highscore) {
-        for (var i=0; i<highscore.length; i=i+2) {
+        // Clear Table
+        var table = $('table.highscore');
+        table.empty();
+
+        for (var i = 0; i < highscore.length; i = i + 2) {
 
             var user = highscore[i];
-            var score = highscore[i+1];
+            var score = highscore[i + 1];
 
             console.log('User "' + user + '" has score ' + score);
+
+            var row = '<tr><td>' + user + '</td><td>' + score + '</td></tr>';
+            table.append(row);
         }
     });
 
