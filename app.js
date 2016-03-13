@@ -63,9 +63,32 @@ io.on("connection", function (socket) {
 
     // Received CTF Response by Client
     socket.on('ctf-response', function (data) {
-        console.log(data);
+        // Create answer
+        var answer = {};
 
-        console.log(redis.hexists('challenges:' + data.id, 'secret'));
+        if (redis.hexists('challenges:' + data.id, 'secret')) {
+            // Challenge exists
+
+            // Check result
+            var expectedResult = redis.hget('challenges:' + data.id, 'expected-result', expectedResult);
+            if (expectedResult == answer.result) {
+                // Result is corrrect
+                answer.success = true;
+                answer.message = "Answer is correct";
+            } else {
+                // Result is incorrect
+                answer.success = false;
+                answer.message = "Answer is incorrect";
+            }
+        }
+        else {
+            // Challenge does not exist
+            answer.success = false;
+            answer.message = "Challenge does not exist";
+        }
+
+        // Send answer
+        socket.emit('ctf-answer', answer);
     });
 });
 
