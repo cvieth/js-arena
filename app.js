@@ -67,9 +67,7 @@ io.on("connection", function (socket) {
         var answer = {};
 
         if (redis.hexists('challenges:' + data.id, 'secret')) {
-            // Challenge exists
-
-            // Check result
+            // Challenge exists, check result
             redis.hget('challenges:' + data.id, 'expected-result', function (err, expectedResult) {
                 if (expectedResult == data.result) {
                     // Result is corrrect
