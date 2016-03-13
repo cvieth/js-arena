@@ -52,12 +52,12 @@ html {
         }
 
         .highscore {
-          tr {
-            width: 100%;
-            td {
-              width: 50%;
-            }
+          table-layout: fixed;
+          td {
+            border: 1px solid $colorAction;
+            max-width: 50%;
           }
+
         }
       }
 
