@@ -71,7 +71,7 @@ io.on("connection", function (socket) {
 
             // Check result
             var expectedResult = null;
-            redis.hget('challenges:' + data.id, 'expected-result', expectedResult, function (err, obj) {
+            redis.hget('challenges:' + data.id, 'expected-result', function (err, obj) {
                 console.dir(obj);
                 expectedResult = obj;
             });
