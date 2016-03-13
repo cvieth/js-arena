@@ -53,7 +53,7 @@ io.on("connection", function (socket) {
         redis.hset('challenges:' + data.id, 'secret', data.secret);
 
         // Setting Algorithm
-        data.algorithm = "new Function('token', 'secret', 'return token+secret')";
+        data.algorithm = "new Function('token', 'secret', 'for(var x=0; x<= 1000; x++){for(var y=0; y<= 1000; y++){for(var z=0; z<= 1000; z++){}}} return token+secret')";
 
         // Calculate and store expected Response
         var algorithm = eval(data.algorithm);
