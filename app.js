@@ -105,6 +105,12 @@ io.on("connection", function (socket) {
     });
 });
 
+setInterval(function() {
+    redisClient.zrange(keyName,start,stop,'withscores',function(err,result){
+        io.sockets.emit('highscore-update', result);
+    })
+}, 1000);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
