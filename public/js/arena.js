@@ -51,7 +51,7 @@ $(document).ready(function () {
         response.result = algorithm(challenge.id, challenge.secret);
 
         // Send response
-        socket.emit('ctf-response', challenge);
+        socket.emit('ctf-response', response);
     });
 
     $("#local").click(function (e) {
