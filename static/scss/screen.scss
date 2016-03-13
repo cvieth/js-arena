@@ -45,13 +45,19 @@ html {
         height: 100px;
         margin-left: auto;
         margin-right: auto;
-        .log {
-          overflow: scroll;
+        .log,
+        .highscore {
+          overflow: hidden;
           font-family: "VT323";
         }
+
         .highscore {
-          overflow: scroll;
-          font-family: "VT323";
+          tr {
+            width: 100%;
+            td {
+              width: 50%;
+            }
+          }
         }
       }
 
