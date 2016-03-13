@@ -41,6 +41,8 @@ $(document).ready(function () {
     });
 
     socket.on('ctf-challenge', function (challenge) {
+        log('CTF-Challenge received!');
+
         // Create response object
         var response = {};
         response.id = challenge.id;
@@ -51,8 +53,15 @@ $(document).ready(function () {
         response.result = algorithm(challenge.id, challenge.secret);
 
         // Send response
+        log('CTF-Response send ...');
         socket.emit('ctf-response', response);
     });
+
+    // CTF Answer
+    socket.on('ctf-answer', function (answer) {
+        log('CTF-Answer: ' + answer.message);
+    });
+
 
     $("#local").click(function (e) {
         e.preventDefault();
