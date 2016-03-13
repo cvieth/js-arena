@@ -31,7 +31,10 @@ io.on("connection", function (socket) {
     // Client disconnected
     socket.on('disconnect', function () {
         redis.decr('clients:connected');
-        io.emit('player-left');
+        io.sockets.emit('player-left');
+
+        // Remove Highscore entry
+        redis.zrem('highscore', socket.id);
     });
 
     // Broadcast remote Code
@@ -76,10 +79,19 @@ io.on("connection", function (socket) {
 
                     // Delete entry from redis
                     redis.del('challenges:' + data.id);
+
+                    // Increase Highscore
+                    redis.zincrby('highscore', 1, socket.id);
                 } else {
                     // Result is incorrect
                     answer.success = false;
                     answer.message = "Answer is incorrect";
+
+                    // Delete entry from redis
+                    redis.del('challenges:' + data.id);
+
+                    // Increase Highscore
+                    redis.zincrby('highscore', -1, socket.id);
                 }
                 socket.emit('ctf-answer', answer);
             });
