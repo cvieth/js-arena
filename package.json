@@ -12,7 +12,11 @@
     "express": "~4.13.1",
     "jade": "~1.11.0",
     "morgan": "~1.6.1",
+    "newrelic": "^1.25.5",
     "node-sass-middleware": "^0.9.7",
+    "node-uuid": "^1.4.7",
+    "pg": "4.5.1",
+    "redis": "^2.5.0-1",
     "serve-favicon": "~2.3.0",
     "socket.io": "^1.4.5"
   }

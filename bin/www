@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 
+// Initiate NewRelic
+require('newrelic');
+
 /**
  * Module dependencies.
  */

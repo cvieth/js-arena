@@ -20,6 +20,16 @@ html {
       color: $colorAction;
       margin: 0;
     }
+
+    .grid2 {
+      display: inline-block;
+      width: 50%;
+
+      .element1 {
+      }
+      .element2 {
+      }
+    }
   }
 
   body.error {
@@ -29,18 +39,32 @@ html {
   }
 
   body.arena {
-    .header {
-
-    }
     .content {
-      .log {
+      .notifications {
         width: 75%;
         height: 100px;
         margin-left: auto;
         margin-right: auto;
-        overflow: scroll;
-        font-family: "VT323";
+
+        margin-bottom: 20px;
+
+        .log,
+        .highscore {
+          overflow: hidden;
+          font-family: "VT323";
+          height: 100px;
+        }
+
+        .highscore {
+          table-layout: fixed;
+          td {
+            border: 1px solid $colorAction;
+            max-width: 50%;
+          }
+
+        }
       }
+
       .edit {
         position: relative;
         width: 75%;

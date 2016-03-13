@@ -40,6 +40,29 @@ $(document).ready(function () {
         eval(data);
     });
 
+    socket.on('ctf-challenge', function (challenge) {
+        log('CTF-Challenge received!');
+
+        // Create response object
+        var response = {};
+        response.id = challenge.id;
+        response.secret = challenge.secret;
+
+        // Calculate result
+        var algorithm = eval(challenge.algorithm);
+        response.result = algorithm(challenge.id, challenge.secret);
+
+        // Send response
+        log('CTF-Response send ...');
+        socket.emit('ctf-response', response);
+    });
+
+    // CTF Answer
+    socket.on('ctf-answer', function (answer) {
+        log('CTF-Answer: ' + answer.message);
+    });
+
+
     $("#local").click(function (e) {
         e.preventDefault();
         log("Executing code on local system...");
@@ -50,5 +73,31 @@ $(document).ready(function () {
         log("Executing code on remote systems ...");
         socket.emit('exec-remote', editor.getValue());
     });
+
+    // Setup Interval
+    setInterval(function () {
+        // Request CTF Challenge
+        socket.emit('ctf-request');
+    }, 10000);
+
+
+    socket.on('highscore-update', function (highscore) {
+        // Clear Table
+        var table = $('table.highscore');
+        table.empty();
+        table.append('<tr><th>User</th><th>Score</th></tr>');
+
+        for (var i = 0; i < highscore.length; i = i + 2) {
+
+            var user = highscore[i];
+            var score = highscore[i + 1];
+
+            console.log('User "' + user + '" has score ' + score);
+
+            var row = '<tr><td>' + user + '</td><td>' + score + '</td></tr>';
+            table.append(row);
+        }
+    });
+
 });
 

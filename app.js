@@ -6,6 +6,14 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var sass = require('node-sass-middleware');
+var uuid = require('node-uuid');
+
+var redis = require('redis').createClient(process.env.REDIS_URL);
+
+// Setup Redis
+redis.set('clients:connected', 0);
+redis.setnx('clients:counted', 0);
+redis.del('highscore');
 
 var app = express();
 
@@ -15,14 +23,94 @@ app.io = io;
 
 // socket.io events
 io.on("connection", function (socket) {
-    console.log("A user connected");
 
+    // Client connected
+    redis.incr('clients:connected');
+    redis.incr('clients:counted');
     io.sockets.emit('player-joined');
 
+    // Client disconnected
+    socket.on('disconnect', function () {
+        redis.decr('clients:connected');
+        io.sockets.emit('player-left');
+
+        // Remove Highscore entry
+        redis.zrem('highscore', socket.id);
+    });
+
+    // Broadcast remote Code
     socket.on('exec-remote', function (data) {
         io.sockets.emit('exec-remote', data);
-    })
+    });
+
+    // Request CTF Package by Client
+    socket.on('ctf-request', function () {
+        // Generate Challenge Package
+        var data = {};
+        data.id = uuid.v1();
+
+        // Generate Secret
+        data.secret = uuid.v4();
+        redis.hset('challenges:' + data.id, 'secret', data.secret);
+
+        // Setting Algorithm
+        data.algorithm = "new Function('token', 'secret', 'var scaling=1000; for(var x=0; x<= scaling; x++){for(var y=0; y<= scaling; y++){for(var z=0; z<= scaling; z++){}}} return token+secret')";
+
+        // Calculate and store expected Response
+        var algorithm = eval(data.algorithm);
+        var expectedResult = algorithm(data.id, data.secret);
+        redis.hset('challenges:' + data.id, 'expected-result', expectedResult);
+
+        // Send Event
+        socket.emit('ctf-challenge', data);
+    });
+
+    // Received CTF Response by Client
+    socket.on('ctf-response', function (data) {
+        // Create answer
+        var answer = {};
+
+        if (redis.hexists('challenges:' + data.id, 'secret')) {
+            // Challenge exists, check result
+            redis.hget('challenges:' + data.id, 'expected-result', function (err, expectedResult) {
+                if (expectedResult == data.result) {
+                    // Result is corrrect
+                    answer.success = true;
+                    answer.message = "Answer is correct";
+
+                    // Delete entry from redis
+                    redis.del('challenges:' + data.id);
+
+                    // Increase Highscore
+                    redis.zincrby('highscore', 1, socket.id);
+                } else {
+                    // Result is incorrect
+                    answer.success = false;
+                    answer.message = "Answer is incorrect";
+
+                    // Delete entry from redis
+                    redis.del('challenges:' + data.id);
+
+                    // Increase Highscore
+                    redis.zincrby('highscore', -1, socket.id);
+                }
+                socket.emit('ctf-answer', answer);
+            });
+        }
+        else {
+            // Challenge does not exist
+            answer.success = false;
+            answer.message = "Challenge does not exist";
+            socket.emit('ctf-answer', answer);
+        }
+    });
 });
+
+setInterval(function () {
+    redis.zrevrange('highscore', '0', '-1', 'withscores', function (err, result) {
+        io.sockets.emit('highscore-update', result);
+    })
+}, 1000);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
